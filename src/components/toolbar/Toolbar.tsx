@@ -285,8 +285,10 @@ function Trigger({ icon, tooltip, actionId }: TriggerProps) {
           onClick={handleClick}
           onFocus={() => setFocusedActionId(actionId || null)}
           onBlur={() => setFocusedActionId(null)}
-          className={`relative min-w-8 min-h-8 flex items-center justify-center px-1 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-800/80 transition-colors duration-200 dark:text-gray-300 text-gray-500 hover:text-gray-700 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-300 dark:focus-visible:ring-neutral-700 ${
-            isActive && isFocused ? 'bg-gray-200/80 dark:bg-neutral-800/80' : ''
+          className={`relative min-w-8 min-h-8 flex items-center justify-center p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-neutral-800/80 transition-colors duration-200 dark:text-gray-300 text-gray-500 hover:text-gray-700 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-300 dark:focus-visible:ring-neutral-700 ${
+            isActive && isFocused
+              ? 'bg-gray-200 dark:bg-neutral-800/80 text-gray-700 dark:text-white'
+              : ''
           }`}
           aria-expanded={isActive}
           aria-haspopup="true"
