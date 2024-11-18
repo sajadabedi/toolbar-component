@@ -1,4 +1,10 @@
-import { Accessibility, Inbox, Moon, Sun } from 'lucide-react'
+import {
+  Accessibility,
+  CircleFadingArrowUpIcon,
+  Inbox,
+  Rabbit,
+  Share2,
+} from 'lucide-react'
 import avatar1 from './assets/1.png'
 import avatar2 from './assets/2.png'
 import avatar3 from './assets/3.png'
@@ -21,6 +27,16 @@ function App() {
         <Toolbar.Action>
           <Toolbar.Trigger
             icon={<Accessibility className="w-5 h-5" />}
+            tooltip="Accessibility"
+          />
+          <Toolbar.Content>
+            <p className="text-sm">Settings</p>
+          </Toolbar.Content>
+        </Toolbar.Action>
+
+        <Toolbar.Action>
+          <Toolbar.Trigger
+            icon={<CircleFadingArrowUpIcon className="w-5 h-5" />}
             tooltip="Accessibility"
           />
           <Toolbar.Content>
@@ -53,6 +69,24 @@ function App() {
           />
           <Toolbar.Content>
             <p className="text-sm">Collaborators</p>
+          </Toolbar.Content>
+        </Toolbar.Action>
+        <Toolbar.Action>
+          <Toolbar.Trigger
+            icon={<Rabbit className="w-5 h-5" />}
+            tooltip="Rabbit"
+          />
+          <Toolbar.Content>
+            <p className="text-sm">Settings</p>
+          </Toolbar.Content>
+        </Toolbar.Action>
+        <Toolbar.Action>
+          <Toolbar.Trigger
+            icon={<Share2 className="w-5 h-5" />}
+            tooltip="Share"
+          />
+          <Toolbar.Content>
+            <p className="text-sm">Settings</p>
           </Toolbar.Content>
         </Toolbar.Action>
       </Toolbar.Root>
