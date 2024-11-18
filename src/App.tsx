@@ -1,4 +1,4 @@
-import { Accessibility, Inbox, Moon, Sun, Users } from 'lucide-react'
+import { Accessibility, Inbox, Moon, Sun } from 'lucide-react'
 import { Toolbar } from './components/toolbar/Toolbar'
 import { useTheme } from './hooks/use-theme'
 
@@ -35,7 +35,6 @@ function App() {
                 <div className="absolute -right-1 -top-1 w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-950" />
                 <div className="absolute -right-3 -top-1 w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-950" />
                 <div className="absolute -right-5 -top-1 w-6 h-6 rounded-full bg-purple-500 border-2 border-white dark:border-gray-950" />
-                <Users className="w-5 h-5" />
               </div>
             }
             tooltip="Team"
