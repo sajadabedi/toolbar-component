@@ -156,7 +156,7 @@ function Root({ children }: { children: React.ReactNode }) {
                 {activeContent && (
                   <motion.div
                     key={activeActionId}
-                    className="rounded-lg bg-gray-50/80 dark:bg-neutral-800/50 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.05)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.05)] mx-1 mt-1"
+                    className="rounded-lg bg-gray-50/80 dark:bg-neutral-900/40 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.05)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)] mx-1 mt-1"
                     custom={direction}
                     initial={
                       shouldReduceMotion
