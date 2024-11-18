@@ -12,6 +12,7 @@ interface ToolbarContextValue {
   activeActionId: string | null
   setActiveActionId: (id: string | null) => void
   registerContent: (id: string, content: React.ReactNode) => void
+  motionDirection: number
 }
 
 const ToolbarContext = React.createContext<ToolbarContextValue | undefined>(
@@ -44,51 +45,82 @@ function Root({ children }: { children: React.ReactNode }) {
   const [activeActionId, setActiveActionId] = React.useState<string | null>(
     null
   )
+  const [direction, setDirection] = React.useState(0)
   const [contents, setContents] = React.useState<Map<string, React.ReactNode>>(
     new Map()
   )
+  const [actionIds, setActionIds] = React.useState<string[]>([])
 
   const registerContent = React.useCallback(
     (id: string, content: React.ReactNode) => {
       setContents((prev) => new Map(prev).set(id, content))
+      setActionIds((prev) => [...new Set([...prev, id])])
     },
     []
   )
 
+  const handleActionChange = React.useCallback(
+    (newId: string | null) => {
+      if (!newId) {
+        setActiveActionId(null)
+        return
+      }
+
+      const oldIndex = actionIds.indexOf(activeActionId || '')
+      const newIndex = actionIds.indexOf(newId)
+      setDirection(oldIndex !== -1 && newIndex !== -1 ? newIndex - oldIndex : 0)
+      setActiveActionId(newId)
+    },
+    [activeActionId, actionIds]
+  )
+
   const activeContent = activeActionId ? contents.get(activeActionId) : null
+  console.log(direction)
 
   return (
     <ToolbarContext.Provider
-      value={{ activeActionId, setActiveActionId, registerContent }}
+      value={{
+        activeActionId,
+        setActiveActionId: handleActionChange,
+        registerContent,
+        motionDirection: direction,
+      }}
     >
       <TooltipProvider delayDuration={100}>
         <div className="fixed bottom-8 left-1/2 -translate-x-1/2">
           <div className="bg-white/80 backdrop-blur-sm dark:bg-gray-950/80 rounded-xl shadow-elevated hover:shadow-rised transition-all duration-300">
-            <AnimatePresence mode="wait">
-              {activeContent && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 500,
-                    damping: 30,
-                    opacity: { duration: 0.2 },
-                  }}
-                  className="overflow-hidden"
-                >
+            <div className="relative overflow-hidden border-b border-gray-200/50 dark:border-gray-800/50">
+              <AnimatePresence mode="sync" custom={direction}>
+                {activeContent && (
                   <motion.div
-                    initial={{ y: -20 }}
-                    animate={{ y: 0 }}
-                    exit={{ y: -20 }}
-                    className="p-4 border-b border-gray-200/50 dark:border-gray-800/50"
+                    key={activeActionId}
+                    custom={direction}
+                    initial={{
+                      x: direction * 20,
+                      opacity: 0,
+                    }}
+                    animate={{
+                      x: 0,
+                      opacity: 1,
+                    }}
+                    exit={{
+                      x: direction * -20,
+                      opacity: 0,
+                      position: 'absolute',
+                    }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 500,
+                      damping: 30,
+                      mass: 0.5,
+                      opacity: { duration: 0.15 },
+                    }}
                   >
-                    {activeContent}
+                    <div className="p-4">{activeContent}</div>
                   </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                )}
+              </AnimatePresence>
+            </div>
             <div className="flex items-center gap-1 p-2">{children}</div>
           </div>
         </div>
