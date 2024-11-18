@@ -4,7 +4,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        inter: ['Inter', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
+      },
+      fontWeight: {
+        normal: 500,
+      },
+      boxShadow: {
+        elevated:
+          '0px 1px 2px 0px rgba(0, 0, 0, 0.12), 0px 0px 0px 1px rgba(0, 0, 0, 0.08)',
+        rised:
+          '0px 2px 4px 0px rgba(0, 0, 0, 0.12), 0px 0px 0px 1px rgba(0, 0, 0, 0.08)',
       },
     },
   },
