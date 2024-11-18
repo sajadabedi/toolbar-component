@@ -49,7 +49,7 @@ function App() {
                 />
               </div>
             }
-            tooltip="Team"
+            tooltip="Jakub, Jonas and 1 more"
           />
           <Toolbar.Content>
             <p className="text-sm">Collaborators</p>
