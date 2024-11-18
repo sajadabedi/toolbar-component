@@ -203,7 +203,7 @@ function Root({ children }: { children: React.ReactNode }) {
               </AnimatePresence>
             </motion.div>
             <div
-              className="flex items-center p-1 justify-center"
+              className="flex items-center p-1 gap-1 justify-center"
               role="group"
               aria-label="Toolbar actions"
             >
@@ -238,7 +238,7 @@ function Action({ children }: { children: React.ReactNode }) {
 
   return (
     <div
-      className="relative h-full flex items-center justify-center before:content-[''] before:absolute before:right-0 before:top-1/2 before:-translate-y-1/2 before:h-1/2 before:w-px before:bg-gradient-to-b before:from-gray-50 before:via-gray-200 before:to-gray-50 last-of-type:before:bg-none dark:before:content-[''] dark:before:absolute dark:before:right-0 dark:before:top-1/2 dark:before:-translate-y-1/2 dark:before:h-1/2 dark:before:w-px dark:before:bg-gradient-to-b dark:before:from-neutral-700/10 dark:before:via-neutral-700 dark:before:to-neutral-700/10 dark:last-of-type:before:bg-none"
+      className="relative flex items-center justify-center"
       data-action-id={actionId}
       role="presentation"
     >
@@ -285,7 +285,7 @@ function Trigger({ icon, tooltip, actionId }: TriggerProps) {
           onClick={handleClick}
           onFocus={() => setFocusedActionId(actionId || null)}
           onBlur={() => setFocusedActionId(null)}
-          className={`relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-800/80 transition-colors duration-200 dark:text-gray-300 text-gray-500 hover:text-gray-700 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-300 dark:focus-visible:ring-neutral-700 ${
+          className={`relative min-w-8 min-h-8 flex items-center justify-center px-1 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-800/80 transition-colors duration-200 dark:text-gray-300 text-gray-500 hover:text-gray-700 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-300 dark:focus-visible:ring-neutral-700 ${
             isActive && isFocused ? 'bg-gray-200/80 dark:bg-neutral-800/80' : ''
           }`}
           aria-expanded={isActive}
