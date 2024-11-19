@@ -8,19 +8,19 @@ import {
 import img1 from './assets/1.png'
 import img2 from './assets/2.png'
 import img3 from './assets/3.png'
-import { Toolbar } from './components/toolbar/Toolbar'
+import { Toolbar } from './components/Toolbar'
 
 function App() {
   return (
     <Toolbar.Root>
-      <Toolbar.Action>
+      <Toolbar.Item>
         <Toolbar.Trigger icon={<Inbox className="w-5 h-5" />} tooltip="Inbox" />
         <Toolbar.Content>
           <p className="text-sm">Messages</p>
         </Toolbar.Content>
-      </Toolbar.Action>
+      </Toolbar.Item>
 
-      <Toolbar.Action>
+      <Toolbar.Item>
         <Toolbar.Trigger
           icon={<Accessibility className="w-5 h-5" />}
           tooltip="Accessibility"
@@ -28,9 +28,9 @@ function App() {
         <Toolbar.Content>
           <p className="text-sm">Settings</p>
         </Toolbar.Content>
-      </Toolbar.Action>
+      </Toolbar.Item>
 
-      <Toolbar.Action>
+      <Toolbar.Item>
         <Toolbar.Trigger
           icon={<CircleFadingArrowUpIcon className="w-5 h-5" />}
           tooltip="Accessibility"
@@ -38,9 +38,9 @@ function App() {
         <Toolbar.Content>
           <p className="text-sm">Settings</p>
         </Toolbar.Content>
-      </Toolbar.Action>
+      </Toolbar.Item>
 
-      <Toolbar.Action>
+      <Toolbar.Item>
         <Toolbar.Trigger
           icon={
             <div
@@ -63,8 +63,9 @@ function App() {
         <Toolbar.Content>
           <p className="text-sm">Collaborators</p>
         </Toolbar.Content>
-      </Toolbar.Action>
-      <Toolbar.Action>
+      </Toolbar.Item>
+
+      <Toolbar.Item>
         <Toolbar.Trigger
           icon={<Rabbit className="w-5 h-5" />}
           tooltip="Rabbit"
@@ -72,8 +73,9 @@ function App() {
         <Toolbar.Content>
           <p className="text-sm">Settings</p>
         </Toolbar.Content>
-      </Toolbar.Action>
-      <Toolbar.Action>
+      </Toolbar.Item>
+
+      <Toolbar.Item>
         <Toolbar.Trigger
           icon={<Share2 className="w-5 h-5" />}
           tooltip="Share"
@@ -81,7 +83,7 @@ function App() {
         <Toolbar.Content>
           <p className="text-sm">Settings</p>
         </Toolbar.Content>
-      </Toolbar.Action>
+      </Toolbar.Item>
     </Toolbar.Root>
   )
 }

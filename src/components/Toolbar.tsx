@@ -5,8 +5,9 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '../Tooltip'
+} from './Tooltip'
 
+// Context interface for Toolbar
 interface ToolbarContextValue {
   activeActionId: string | null
   setActiveActionId: (id: string | null) => void
@@ -16,10 +17,12 @@ interface ToolbarContextValue {
   setFocusedActionId: (id: string | null) => void
 }
 
+// Create context for Toolbar
 const ToolbarContext = React.createContext<ToolbarContextValue | undefined>(
   undefined
 )
 
+// Custom hook to use Toolbar context
 function useToolbarContext() {
   const context = React.useContext(ToolbarContext)
   if (!context) {
@@ -28,10 +31,7 @@ function useToolbarContext() {
   return context
 }
 
-/**
- * Root component for the Toolbar.
- * Provides context and layout for toolbar actions and their content.
- */
+// Root component for the Toolbar
 function Root({ children }: { children: React.ReactNode }) {
   const [activeActionId, setActiveActionId] = React.useState<string | null>(
     null
@@ -46,6 +46,7 @@ function Root({ children }: { children: React.ReactNode }) {
   const [actionIds, setActionIds] = React.useState<string[]>([])
   const shouldReduceMotion = useReducedMotion()
 
+  // Register content for items
   const registerContent = React.useCallback(
     (id: string, content: React.ReactNode) => {
       setContents((prev) => new Map(prev).set(id, content))
@@ -54,6 +55,7 @@ function Root({ children }: { children: React.ReactNode }) {
     []
   )
 
+  // Handle action changes
   const handleActionChange = React.useCallback(
     (newId: string | null) => {
       if (!newId) {
@@ -72,7 +74,7 @@ function Root({ children }: { children: React.ReactNode }) {
   const activeContent = activeActionId ? contents.get(activeActionId) : null
 
   // Handle keyboard navigation
-  const handleKeyDown = (event: React.KeyboardEvent) => {
+  const handleKeyboardNavigation = (event: React.KeyboardEvent) => {
     const currentFocusIndex = actionIds.indexOf(focusedActionId || '')
 
     switch (event.key) {
@@ -93,7 +95,7 @@ function Root({ children }: { children: React.ReactNode }) {
         }
         break
       case 'Enter':
-      case ' ': // Space key
+      case ' ':
         event.preventDefault()
         if (focusedActionId) {
           const newIndex = actionIds.indexOf(focusedActionId)
@@ -130,12 +132,9 @@ function Root({ children }: { children: React.ReactNode }) {
           className="fixed bottom-8 left-1/2 -translate-x-1/2"
           role="toolbar"
           aria-label="Action toolbar"
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleKeyboardNavigation}
         >
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            className="bg-white dark:bg-neutral-800 rounded-xl shadow-elevated    transition-all duration-300 dark:shadow-elevatedDark"
-          >
+          <div className="bg-white dark:bg-neutral-800 rounded-xl shadow-elevated transition-all duration-300 dark:shadow-elevatedDark">
             <motion.div
               initial={false}
               animate={{
@@ -164,18 +163,10 @@ function Root({ children }: { children: React.ReactNode }) {
                     initial={
                       shouldReduceMotion
                         ? { opacity: 0 }
-                        : {
-                            x: direction * 20,
-                            opacity: 0,
-                          }
+                        : { x: direction * 20, opacity: 0 }
                     }
                     animate={
-                      shouldReduceMotion
-                        ? { opacity: 1 }
-                        : {
-                            x: 0,
-                            opacity: 1,
-                          }
+                      shouldReduceMotion ? { opacity: 1 } : { x: 0, opacity: 1 }
                     }
                     exit={
                       shouldReduceMotion
@@ -208,21 +199,18 @@ function Root({ children }: { children: React.ReactNode }) {
             <div
               className="flex items-center p-1 gap-1 justify-center"
               role="group"
-              aria-label="Toolbar actions"
+              aria-label="Toolbar items"
             >
               {children}
             </div>
-          </motion.div>
+          </div>
         </div>
       </TooltipProvider>
     </ToolbarContext.Provider>
   )
 }
 
-/**
- * Container for a toolbar action and its associated content.
- */
-function Action({ children }: { children: React.ReactNode }) {
+function Item({ children }: { children: React.ReactNode }) {
   const actionId = React.useId()
   const { registerContent } = useToolbarContext()
 
@@ -252,17 +240,11 @@ function Action({ children }: { children: React.ReactNode }) {
 }
 
 interface TriggerProps {
-  /** Icon component to display in the trigger button */
   icon: React.ReactNode
-  /** Tooltip text shown on hover */
   tooltip: string
-  /** @internal */
   actionId?: string
 }
 
-/**
- * Button that triggers the display of associated content.
- */
 function Trigger({ icon, tooltip, actionId }: TriggerProps) {
   const {
     activeActionId,
@@ -288,9 +270,11 @@ function Trigger({ icon, tooltip, actionId }: TriggerProps) {
           onClick={handleClick}
           onFocus={() => setFocusedActionId(actionId || null)}
           onBlur={() => setFocusedActionId(null)}
-          className={`relative min-w-8 min-h-8 flex items-center justify-center p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-neutral-700/50 transition-colors duration-200 dark:text-gray-300 text-gray-500 hover:text-gray-700 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-300 dark:focus-visible:ring-neutral-700 ${
-            isActive && isFocused
+          className={`relative min-w-8 min-h-8 flex items-center justify-center p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-neutral-700/50 transition-colors duration-200 dark:text-gray-300 text-gray-500 hover:text-gray-700 dark:hover:text-white focus-visible:outline-none ${
+            isActive
               ? 'bg-gray-200 dark:bg-neutral-700/50 text-gray-700 dark:text-white'
+              : isFocused
+              ? 'shadow-[inset_0_0_0_1.5px_rgba(229,231,235)] dark:shadow-[inset_0_0_0_1.5px_rgba(39,44,55)]'
               : ''
           }`}
           aria-expanded={isActive}
@@ -308,24 +292,15 @@ function Trigger({ icon, tooltip, actionId }: TriggerProps) {
   )
 }
 
-interface ContentProps {
-  /** Content to display when the action is triggered */
-  children: React.ReactNode
-  /** @internal */
-  actionId?: string
-}
-
-/**
- * Container for content shown when an action is triggered.
- * Note: This is a marker component - the content is rendered through the registration system.
- */
-function Content(_: ContentProps) {
+// Content component for toolbar items
+function Content(_: { children: React.ReactNode; actionId?: string }) {
   return null
 }
 
+// Exporting Toolbar components
 export const Toolbar = {
   Root,
-  Action,
+  Item,
   Trigger,
   Content,
 }
