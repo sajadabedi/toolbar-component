@@ -1,12 +1,4 @@
-import * as React from 'react'
-
-interface CollaboratorProps {
-  avatar: string
-  name: string
-  lastEdited: string
-}
-
-const CollaboratorItem = ({ avatar, name, lastEdited }: CollaboratorProps) => (
+const CollaboratorItem = ({ avatar, name, lastEdited }: any) => (
   <li className="flex gap-2 items-center">
     <img
       src={avatar}
