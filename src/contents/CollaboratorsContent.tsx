@@ -30,7 +30,7 @@ const CollaboratorsContent = () => {
       {collaborators.map((collaborator) => (
         <CollaboratorItem key={collaborator.name} {...collaborator} />
       ))}
-      <button className="mt-2 text-sm text-gray-700 dark:text-neutral-200 shadow-subtle rounded-md text-[13px] w-full text-center bg-white px-2 py-1 dark:bg-neutral-800">
+      <button className="mt-2 dark:text-neutral-200 border border-gray-200 dark:bg-neutral-700 dark:border-neutral-600 bg-white w-full h-7 px-2 rounded-lg text-[13px] focus:outline-none">
         View all →
       </button>
     </ul>

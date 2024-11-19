@@ -1,16 +1,11 @@
-import {
-  Accessibility,
-  CircleFadingArrowUpIcon,
-  Inbox,
-  Rabbit,
-  Share2,
-} from 'lucide-react'
+import { Contrast, Cookie, Inbox, Rabbit, Share2 } from 'lucide-react'
 import img1 from './assets/1.png'
 import img2 from './assets/2.png'
 import img3 from './assets/3.png'
 import { Toolbar } from './components/Toolbar'
 import AccessibilityContent from './contents/AccessibilityContent'
 import CollaboratorsContent from './contents/CollaboratorsContent'
+import CookieContent from './contents/CookieContent'
 import InboxContent from './contents/InboxContent'
 import PerformanceContent from './contents/PerformanceContent'
 import ShareContent from './contents/ShareContent'
@@ -27,7 +22,7 @@ function App() {
 
       <Toolbar.Item>
         <Toolbar.Trigger
-          icon={<Accessibility className="size-5" />}
+          icon={<Contrast className="size-5" />}
           tooltip="Accessibility"
         />
         <Toolbar.Content>
@@ -37,11 +32,11 @@ function App() {
 
       <Toolbar.Item>
         <Toolbar.Trigger
-          icon={<CircleFadingArrowUpIcon className="size-5" />}
-          tooltip="Accessibility"
+          icon={<Cookie className="size-5" />}
+          tooltip="Cookie"
         />
         <Toolbar.Content>
-          <AccessibilityContent />
+          <CookieContent />
         </Toolbar.Content>
       </Toolbar.Item>
 
