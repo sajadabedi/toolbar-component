@@ -21,7 +21,6 @@ function App() {
       <Toolbar.Item>
         <Toolbar.Trigger icon={<Inbox className="size-5" />} tooltip="Inbox" />
         <Toolbar.Content>
-          {/* Dummy content */}
           <InboxContent />
         </Toolbar.Content>
       </Toolbar.Item>
@@ -32,7 +31,6 @@ function App() {
           tooltip="Accessibility"
         />
         <Toolbar.Content>
-          {/* Dummy content */}
           <AccessibilityContent />
         </Toolbar.Content>
       </Toolbar.Item>
@@ -43,7 +41,6 @@ function App() {
           tooltip="Accessibility"
         />
         <Toolbar.Content>
-          {/* Dummy content */}
           <AccessibilityContent />
         </Toolbar.Content>
       </Toolbar.Item>
@@ -69,7 +66,6 @@ function App() {
           tooltip="Jakub, Jonas and 1 more"
         />
         <Toolbar.Content>
-          {/* Dummy content */}
           <CollaboratorsContent />
         </Toolbar.Content>
       </Toolbar.Item>
@@ -80,7 +76,6 @@ function App() {
           tooltip="Improve performance"
         />
         <Toolbar.Content>
-          {/* Dummy content */}
           <PerformanceContent />
         </Toolbar.Content>
       </Toolbar.Item>
@@ -88,7 +83,6 @@ function App() {
       <Toolbar.Item>
         <Toolbar.Trigger icon={<Share2 className="size-5" />} tooltip="Share" />
         <Toolbar.Content>
-          {/* Dummy content */}
           <ShareContent />
         </Toolbar.Content>
       </Toolbar.Item>
