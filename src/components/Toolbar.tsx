@@ -1,35 +1,17 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import * as React from 'react'
+import { TriggerProps } from './Toolbar/types'
+import {
+  handleKeyboardNavigation,
+  ToolbarContext,
+  useToolbarContext,
+} from './Toolbar/utils'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from './Tooltip'
-
-// Context interface for Toolbar
-interface ToolbarContextValue {
-  activeItemId: string | null
-  setActiveItemId: (id: string | null) => void
-  registerContent: (id: string, content: React.ReactNode) => void
-  motionDirection: number
-  focusedItemId: string | null
-  setFocusedItemId: (id: string | null) => void
-}
-
-// Create context for Toolbar
-const ToolbarContext = React.createContext<ToolbarContextValue | undefined>(
-  undefined
-)
-
-// Custom hook to use Toolbar context
-function useToolbarContext() {
-  const context = React.useContext(ToolbarContext)
-  if (!context) {
-    throw new Error('Toolbar components must be used within a Toolbar.Root')
-  }
-  return context
-}
 
 // Root component for the Toolbar
 function Root({ children }: { children: React.ReactNode }) {
@@ -69,57 +51,15 @@ function Root({ children }: { children: React.ReactNode }) {
 
   const activeContent = activeItemId ? contents.get(activeItemId) : null
 
-  // Handle keyboard navigation
-  const handleKeyboardNavigation = (event: React.KeyboardEvent) => {
-    const currentFocusIndex = itemIds.indexOf(focusedItemId || '')
-    let newFocusedId: string | null = null
-
-    switch (event.key) {
-      case 'ArrowLeft':
-        event.preventDefault()
-        if (currentFocusIndex > 0) {
-          newFocusedId = itemIds[currentFocusIndex - 1]
-        } else if (currentFocusIndex === -1 && itemIds.length > 0) {
-          newFocusedId = itemIds[0]
-        }
-        break
-      case 'ArrowRight':
-        event.preventDefault()
-        if (currentFocusIndex < itemIds.length - 1) {
-          newFocusedId = itemIds[currentFocusIndex + 1]
-        } else if (currentFocusIndex === -1 && itemIds.length > 0) {
-          newFocusedId = itemIds[0]
-        }
-        break
-      case 'Enter':
-      case ' ':
-        event.preventDefault()
-        if (focusedItemId) {
-          const newIndex = itemIds.indexOf(focusedItemId)
-          const oldIndex = itemIds.indexOf(activeItemId || '')
-          setDirection(
-            oldIndex !== -1 && newIndex !== -1 ? newIndex - oldIndex : 0
-          )
-          setActiveItemId(focusedItemId === activeItemId ? null : focusedItemId)
-        }
-        break
-      case 'Escape':
-        event.preventDefault()
-        setActiveItemId(null)
-        setFocusedItemId(null)
-        break
-    }
-
-    if (newFocusedId) {
-      setFocusedItemId(newFocusedId)
-      // Find and focus the button element
-      const button = document.querySelector(
-        `[data-item-id="${newFocusedId}"] button`
-      )
-      if (button instanceof HTMLElement) {
-        button.focus()
-      }
-    }
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    handleKeyboardNavigation(event, {
+      itemIds,
+      focusedItemId,
+      activeItemId,
+      setFocusedItemId,
+      setActiveItemId,
+      setDirection,
+    })
   }
 
   return (
@@ -138,7 +78,7 @@ function Root({ children }: { children: React.ReactNode }) {
           className="fixed bottom-8 left-1/2 -translate-x-1/2"
           role="toolbar"
           aria-label="Item toolbar"
-          onKeyDown={handleKeyboardNavigation}
+          onKeyDown={handleKeyDown}
         >
           <div className="bg-white dark:bg-neutral-800 rounded-xl shadow-elevated transition-all duration-300 dark:shadow-elevatedDark">
             <motion.div
@@ -243,12 +183,6 @@ function Item({ children }: { children: React.ReactNode }) {
         React.cloneElement(trigger, { itemId } as any)}
     </div>
   )
-}
-
-interface TriggerProps {
-  icon: React.ReactNode
-  tooltip: string
-  itemId?: string
 }
 
 function Trigger({ icon, tooltip, itemId }: TriggerProps) {
