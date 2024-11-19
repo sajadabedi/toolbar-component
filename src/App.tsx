@@ -72,7 +72,7 @@ function App() {
                 />
                 <div className="flex flex-col">
                   <span className="text-sm">Jakub</span>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-500 dark:text-neutral-400">
                     Last edited: 10 minutes ago
                   </span>
                 </div>
@@ -87,7 +87,7 @@ function App() {
                 />
                 <div className="flex flex-col">
                   <span className="text-sm">Jonas</span>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-500 dark:text-neutral-400">
                     Last edited: 1 hour ago
                   </span>
                 </div>
@@ -102,13 +102,13 @@ function App() {
                 />
                 <div className="flex flex-col">
                   <span className="text-sm">Kuba</span>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-500 dark:text-neutral-400">
                     Last edited: 2 hours ago
                   </span>
                 </div>
               </li>
             )}
-            <button className="mt-2 text-sm text-gray-700 dark:text-neutral-400 shadow-subtle rounded-md text-[13px] w-full text-center bg-white px-2 py-1 dark:bg-neutral-800">
+            <button className="mt-2 text-sm text-gray-700 dark:text-neutral-200 shadow-subtle rounded-md text-[13px] w-full text-center bg-white px-2 py-1 dark:bg-neutral-800">
               View all →
             </button>
           </ul>
@@ -135,26 +135,28 @@ function App() {
                 0.24
               </li>
             </ul>
-            <ul className="flex flex-wrap gap-2 mt-1">
-              <li className="shadow-subtle flex flex-col rounded-md text-[13px] w-full bg-white px-3 py-2 dark:bg-neutral-800 items-baseline">
-                <h4 className="text-sm">
-                  <span className="size-2 rounded-full inline-block border-2 border-red-500 mr-1" />
-                  Image compression
-                </h4>
-                <p className="text-[13px] text-gray-500 dark:text-neutral-400">
-                  Compress your images to reduce the size of your website.
-                </p>
-              </li>
-              <li className="shadow-subtle flex flex-col rounded-md text-[13px] w-full bg-white px-3 py-2 dark:bg-neutral-800 items-baseline">
-                <h4 className="text-sm">
-                  <span className="size-2 rounded-full inline-block border-2 border-yellow-500 mr-1" />
-                  Code splitting
-                </h4>
-                <p className="text-[13px] text-gray-500 dark:text-neutral-400">
-                  Split your code into smaller chunks.
-                </p>
-              </li>
-            </ul>
+            <div className="shadow-subtle mt-2 rounded-md text-[13px] w-full bg-white  dark:bg-neutral-800 py-2">
+              <ul className="flex flex-col">
+                <li className="flex flex-col border-b border-gray-100 dark:border-neutral-700 pb-2 px-3">
+                  <h4 className="text-sm">
+                    <span className="size-2 rounded-full inline-block border-2 border-red-500 mr-1" />
+                    Image compression
+                  </h4>
+                  <p className="text-[13px] text-gray-500 dark:text-neutral-400">
+                    Compress your images to reduce the size of your website.
+                  </p>
+                </li>
+                <li className="flex flex-col pt-2 px-3">
+                  <h4 className="text-sm">
+                    <span className="size-2 rounded-full inline-block border-2 border-yellow-500 mr-1" />
+                    Code splitting
+                  </h4>
+                  <p className="text-[13px] text-gray-500 dark:text-neutral-400">
+                    Split your code into smaller chunks.
+                  </p>
+                </li>
+              </ul>
+            </div>
           </div>
         </Toolbar.Content>
       </Toolbar.Item>
