@@ -76,22 +76,23 @@ function Root({ children }: { children: React.ReactNode }) {
   // Handle keyboard navigation
   const handleKeyboardNavigation = (event: React.KeyboardEvent) => {
     const currentFocusIndex = actionIds.indexOf(focusedActionId || '')
+    let newFocusedId: string | null = null
 
     switch (event.key) {
       case 'ArrowLeft':
         event.preventDefault()
         if (currentFocusIndex > 0) {
-          setFocusedActionId(actionIds[currentFocusIndex - 1])
+          newFocusedId = actionIds[currentFocusIndex - 1]
         } else if (currentFocusIndex === -1 && actionIds.length > 0) {
-          setFocusedActionId(actionIds[0])
+          newFocusedId = actionIds[0]
         }
         break
       case 'ArrowRight':
         event.preventDefault()
         if (currentFocusIndex < actionIds.length - 1) {
-          setFocusedActionId(actionIds[currentFocusIndex + 1])
+          newFocusedId = actionIds[currentFocusIndex + 1]
         } else if (currentFocusIndex === -1 && actionIds.length > 0) {
-          setFocusedActionId(actionIds[0])
+          newFocusedId = actionIds[0]
         }
         break
       case 'Enter':
@@ -113,6 +114,17 @@ function Root({ children }: { children: React.ReactNode }) {
         setActiveActionId(null)
         setFocusedActionId(null)
         break
+    }
+
+    if (newFocusedId) {
+      setFocusedActionId(newFocusedId)
+      // Find and focus the button element
+      const button = document.querySelector(
+        `[data-action-id="${newFocusedId}"] button`
+      )
+      if (button instanceof HTMLElement) {
+        button.focus()
+      }
     }
   }
 
