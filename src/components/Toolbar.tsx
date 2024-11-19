@@ -198,7 +198,7 @@ function Root({ children }: { children: React.ReactNode }) {
                     }}
                   >
                     <div
-                      className="p-4"
+                      className="p-2 max-w-[236px]"
                       role="region"
                       aria-label="Action content"
                     >
