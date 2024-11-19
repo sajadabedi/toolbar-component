@@ -9,12 +9,12 @@ import {
 
 // Context interface for Toolbar
 interface ToolbarContextValue {
-  activeActionId: string | null
-  setActiveActionId: (id: string | null) => void
+  activeItemId: string | null
+  setActiveItemId: (id: string | null) => void
   registerContent: (id: string, content: React.ReactNode) => void
   motionDirection: number
-  focusedActionId: string | null
-  setFocusedActionId: (id: string | null) => void
+  focusedItemId: string | null
+  setFocusedItemId: (id: string | null) => void
 }
 
 // Create context for Toolbar
@@ -33,94 +33,88 @@ function useToolbarContext() {
 
 // Root component for the Toolbar
 function Root({ children }: { children: React.ReactNode }) {
-  const [activeActionId, setActiveActionId] = React.useState<string | null>(
-    null
-  )
-  const [focusedActionId, setFocusedActionId] = React.useState<string | null>(
-    null
-  )
+  const [activeItemId, setActiveItemId] = React.useState<string | null>(null)
+  const [focusedItemId, setFocusedItemId] = React.useState<string | null>(null)
   const [direction, setDirection] = React.useState(0)
   const [contents, setContents] = React.useState<Map<string, React.ReactNode>>(
     new Map()
   )
-  const [actionIds, setActionIds] = React.useState<string[]>([])
+  const [itemIds, setItemIds] = React.useState<string[]>([])
   const shouldReduceMotion = useReducedMotion()
 
   // Register content for items
   const registerContent = React.useCallback(
     (id: string, content: React.ReactNode) => {
       setContents((prev) => new Map(prev).set(id, content))
-      setActionIds((prev) => [...new Set([...prev, id])])
+      setItemIds((prev) => [...new Set([...prev, id])])
     },
     []
   )
 
-  // Handle action changes
-  const handleActionChange = React.useCallback(
+  // Handle item changes
+  const handleItemChange = React.useCallback(
     (newId: string | null) => {
       if (!newId) {
-        setActiveActionId(null)
+        setActiveItemId(null)
         return
       }
 
-      const oldIndex = actionIds.indexOf(activeActionId || '')
-      const newIndex = actionIds.indexOf(newId)
+      const oldIndex = itemIds.indexOf(activeItemId || '')
+      const newIndex = itemIds.indexOf(newId)
       setDirection(oldIndex !== -1 && newIndex !== -1 ? newIndex - oldIndex : 0)
-      setActiveActionId(newId)
+      setActiveItemId(newId)
     },
-    [activeActionId, actionIds]
+    [activeItemId, itemIds]
   )
 
-  const activeContent = activeActionId ? contents.get(activeActionId) : null
+  const activeContent = activeItemId ? contents.get(activeItemId) : null
 
   // Handle keyboard navigation
   const handleKeyboardNavigation = (event: React.KeyboardEvent) => {
-    const currentFocusIndex = actionIds.indexOf(focusedActionId || '')
+    const currentFocusIndex = itemIds.indexOf(focusedItemId || '')
     let newFocusedId: string | null = null
 
     switch (event.key) {
       case 'ArrowLeft':
         event.preventDefault()
         if (currentFocusIndex > 0) {
-          newFocusedId = actionIds[currentFocusIndex - 1]
-        } else if (currentFocusIndex === -1 && actionIds.length > 0) {
-          newFocusedId = actionIds[0]
+          newFocusedId = itemIds[currentFocusIndex - 1]
+        } else if (currentFocusIndex === -1 && itemIds.length > 0) {
+          newFocusedId = itemIds[0]
         }
         break
       case 'ArrowRight':
         event.preventDefault()
-        if (currentFocusIndex < actionIds.length - 1) {
-          newFocusedId = actionIds[currentFocusIndex + 1]
-        } else if (currentFocusIndex === -1 && actionIds.length > 0) {
-          newFocusedId = actionIds[0]
+        if (currentFocusIndex < itemIds.length - 1) {
+          newFocusedId = itemIds[currentFocusIndex + 1]
+        } else if (currentFocusIndex === -1 && itemIds.length > 0) {
+          newFocusedId = itemIds[0]
         }
         break
       case 'Enter':
       case ' ':
         event.preventDefault()
-        if (focusedActionId) {
-          const newIndex = actionIds.indexOf(focusedActionId)
-          const oldIndex = actionIds.indexOf(activeActionId || '')
+        if (focusedItemId) {
+          const newIndex = itemIds.indexOf(focusedItemId)
+          const oldIndex = itemIds.indexOf(activeItemId || '')
           setDirection(
             oldIndex !== -1 && newIndex !== -1 ? newIndex - oldIndex : 0
           )
-          setActiveActionId(
-            focusedActionId === activeActionId ? null : focusedActionId
-          )
+          setActiveItemId(focusedItemId === activeItemId ? null : focusedItemId)
         }
         break
       case 'Escape':
         event.preventDefault()
-        setActiveActionId(null)
-        setFocusedActionId(null)
+        setActiveItemId(null)
+        setFocusedItemId(null)
         break
     }
 
     if (newFocusedId) {
-      setFocusedActionId(newFocusedId)
+      setFocusedItemId(newFocusedId)
       // Find and focus the button element
       const button = document.querySelector(
-        `[data-action-id="${newFocusedId}"] button`
+        `[data-item-id="${newFocusedId}"] button`
       )
       if (button instanceof HTMLElement) {
         button.focus()
@@ -131,19 +125,19 @@ function Root({ children }: { children: React.ReactNode }) {
   return (
     <ToolbarContext.Provider
       value={{
-        activeActionId,
-        setActiveActionId: handleActionChange,
+        activeItemId,
+        setActiveItemId: handleItemChange,
         registerContent,
         motionDirection: direction,
-        focusedActionId,
-        setFocusedActionId,
+        focusedItemId,
+        setFocusedItemId,
       }}
     >
       <TooltipProvider delayDuration={500}>
         <div
           className="fixed bottom-8 left-1/2 -translate-x-1/2"
           role="toolbar"
-          aria-label="Action toolbar"
+          aria-label="Item toolbar"
           onKeyDown={handleKeyboardNavigation}
         >
           <div className="bg-white dark:bg-neutral-800 rounded-xl shadow-elevated transition-all duration-300 dark:shadow-elevatedDark">
@@ -169,7 +163,7 @@ function Root({ children }: { children: React.ReactNode }) {
               <AnimatePresence mode="sync" custom={direction}>
                 {activeContent && (
                   <motion.div
-                    key={activeActionId}
+                    key={activeItemId}
                     className="rounded-lg bg-gray-50/80 dark:bg-neutral-900/40 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.05)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)] mx-1 mt-1"
                     custom={direction}
                     initial={
@@ -200,7 +194,7 @@ function Root({ children }: { children: React.ReactNode }) {
                     <div
                       className="p-2 max-w-[236px]"
                       role="region"
-                      aria-label="Action content"
+                      aria-label="Item content"
                     >
                       {activeContent}
                     </div>
@@ -223,7 +217,7 @@ function Root({ children }: { children: React.ReactNode }) {
 }
 
 function Item({ children }: { children: React.ReactNode }) {
-  const actionId = React.useId()
+  const itemId = React.useId()
   const { registerContent } = useToolbarContext()
 
   React.useEffect(() => {
@@ -231,9 +225,9 @@ function Item({ children }: { children: React.ReactNode }) {
       (child) => React.isValidElement(child) && child.type === Content
     )
     if (React.isValidElement(content)) {
-      registerContent(actionId, content.props.children)
+      registerContent(itemId, content.props.children)
     }
-  }, [actionId, children, registerContent])
+  }, [itemId, children, registerContent])
 
   const trigger = React.Children.toArray(children).find(
     (child) => React.isValidElement(child) && child.type === Trigger
@@ -242,11 +236,11 @@ function Item({ children }: { children: React.ReactNode }) {
   return (
     <div
       className="relative flex items-center justify-center"
-      data-action-id={actionId}
+      data-item-id={itemId}
       role="presentation"
     >
       {React.isValidElement(trigger) &&
-        React.cloneElement(trigger, { actionId } as any)}
+        React.cloneElement(trigger, { itemId } as any)}
     </div>
   )
 }
@@ -254,24 +248,20 @@ function Item({ children }: { children: React.ReactNode }) {
 interface TriggerProps {
   icon: React.ReactNode
   tooltip: string
-  actionId?: string
+  itemId?: string
 }
 
-function Trigger({ icon, tooltip, actionId }: TriggerProps) {
-  const {
-    activeActionId,
-    setActiveActionId,
-    focusedActionId,
-    setFocusedActionId,
-  } = useToolbarContext()
+function Trigger({ icon, tooltip, itemId }: TriggerProps) {
+  const { activeItemId, setActiveItemId, focusedItemId, setFocusedItemId } =
+    useToolbarContext()
 
-  const isActive = actionId === activeActionId
-  const isFocused = actionId === focusedActionId
+  const isActive = itemId === activeItemId
+  const isFocused = itemId === focusedItemId
 
   const handleClick = () => {
-    if (actionId) {
-      setActiveActionId(isActive ? null : actionId)
-      setFocusedActionId(actionId)
+    if (itemId) {
+      setActiveItemId(isActive ? null : itemId)
+      setFocusedItemId(itemId)
     }
   }
 
@@ -280,8 +270,8 @@ function Trigger({ icon, tooltip, actionId }: TriggerProps) {
       <TooltipTrigger asChild>
         <button
           onClick={handleClick}
-          onFocus={() => setFocusedActionId(actionId || null)}
-          onBlur={() => setFocusedActionId(null)}
+          onFocus={() => setFocusedItemId(itemId || null)}
+          onBlur={() => setFocusedItemId(null)}
           className={`relative min-w-8 min-h-8 flex items-center justify-center p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-neutral-700 transition-colors duration-200 dark:text-gray-300 text-gray-500 hover:text-gray-700 dark:hover:text-white focus-visible:outline-none ${
             isActive
               ? 'bg-gray-200 dark:bg-neutral-700 text-gray-700 dark:text-white'
@@ -305,7 +295,7 @@ function Trigger({ icon, tooltip, actionId }: TriggerProps) {
 }
 
 // Content component for toolbar items
-function Content(_: { children: React.ReactNode; actionId?: string }) {
+function Content(_: { children: React.ReactNode; itemId?: string }) {
   return null
 }
 
