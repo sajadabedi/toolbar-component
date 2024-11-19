@@ -132,7 +132,10 @@ function Root({ children }: { children: React.ReactNode }) {
           aria-label="Action toolbar"
           onKeyDown={handleKeyDown}
         >
-          <div className="bg-white dark:bg-neutral-800 rounded-xl shadow-elevated    transition-all duration-300 dark:shadow-elevatedDark">
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className="bg-white dark:bg-neutral-800 rounded-xl shadow-elevated    transition-all duration-300 dark:shadow-elevatedDark"
+          >
             <motion.div
               initial={false}
               animate={{
@@ -209,7 +212,7 @@ function Root({ children }: { children: React.ReactNode }) {
             >
               {children}
             </div>
-          </div>
+          </motion.div>
         </div>
       </TooltipProvider>
     </ToolbarContext.Provider>
@@ -285,9 +288,9 @@ function Trigger({ icon, tooltip, actionId }: TriggerProps) {
           onClick={handleClick}
           onFocus={() => setFocusedActionId(actionId || null)}
           onBlur={() => setFocusedActionId(null)}
-          className={`relative min-w-8 min-h-8 flex items-center justify-center p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-neutral-800/80 transition-colors duration-200 dark:text-gray-300 text-gray-500 hover:text-gray-700 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-300 dark:focus-visible:ring-neutral-700 ${
+          className={`relative min-w-8 min-h-8 flex items-center justify-center p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-neutral-700/50 transition-colors duration-200 dark:text-gray-300 text-gray-500 hover:text-gray-700 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-300 dark:focus-visible:ring-neutral-700 ${
             isActive && isFocused
-              ? 'bg-gray-200 dark:bg-neutral-800/80 text-gray-700 dark:text-white'
+              ? 'bg-gray-200 dark:bg-neutral-700/50 text-gray-700 dark:text-white'
               : ''
           }`}
           aria-expanded={isActive}
