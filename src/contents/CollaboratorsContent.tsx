@@ -1,7 +1,11 @@
-const CollaboratorItem = ({ avatar, name, lastEdited }: any) => (
+import { DummyData } from './DummyData'
+
+const CollaboratorItem = ({ src, name, lastEdited }: any) => (
   <li className="flex gap-2 items-center">
     <img
-      src={avatar}
+      src={src}
+      width={24}
+      height={24}
       alt={`${name}'s avatar`}
       className="size-6 rounded-full select-none"
       draggable={false}
@@ -16,19 +20,9 @@ const CollaboratorItem = ({ avatar, name, lastEdited }: any) => (
 )
 
 const CollaboratorsContent = () => {
-  const collaborators = [
-    {
-      avatar: '/src/assets/1.png',
-      name: 'Jakub',
-      lastEdited: '10 minutes ago',
-    },
-    { avatar: '/src/assets/2.png', name: 'Jonas', lastEdited: '1 hour ago' },
-    { avatar: '/src/assets/3.png', name: 'Kuba', lastEdited: '2 hours ago' },
-  ]
-
   return (
     <ul className="flex flex-col gap-1 w-full">
-      {collaborators.map((collaborator) => (
+      {DummyData.map((collaborator) => (
         <CollaboratorItem key={collaborator.name} {...collaborator} />
       ))}
       <button className="mt-2 dark:text-neutral-200 border border-gray-200 dark:bg-neutral-700 dark:border-neutral-600 bg-white w-full h-7 px-2 rounded-lg text-[13px] focus:outline-none">

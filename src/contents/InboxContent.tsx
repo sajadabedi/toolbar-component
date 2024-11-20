@@ -1,9 +1,13 @@
-const InboxItem = ({ avatar, name, message, time }: any) => (
+import { DummyData } from './DummyData'
+
+const InboxItem = ({ src, name, message, time }: any) => (
   <li className="flex gap-2 items-center">
     <img
-      src={avatar}
+      width={24}
+      height={24}
+      src={src}
       alt={`${name}'s avatar`}
-      className="size-6 rounded-full"
+      className="size-6 rounded-full bg-cover"
     />
     <div className="flex flex-col">
       <span className="text-sm">
@@ -20,24 +24,9 @@ const InboxItem = ({ avatar, name, message, time }: any) => (
 )
 
 const InboxContent = () => {
-  const messages = [
-    {
-      avatar: '/src/assets/1.png',
-      name: 'Jakub',
-      message: 'Hello, how can I help you?',
-      time: '10:00 AM',
-    },
-    {
-      avatar: '/src/assets/2.png',
-      name: 'Jonas',
-      message: 'I need assistance with my account.',
-      time: '11:00 AM',
-    },
-  ]
-
   return (
     <ul className="flex flex-col gap-1 w-full">
-      {messages.map((message) => (
+      {DummyData.filter((_, index) => index < 2).map((message) => (
         <InboxItem key={message.name} {...message} />
       ))}
     </ul>
