@@ -1,42 +1,20 @@
-# An Interactive Component
+# Toolbar Component
 
-Built using `React`, `Framer Motion`, and `Tailwind CSS`.
+Built using `React`, `Framer Motion`, `Tailwind CSS`.
 
-## Toolbar Component
-
-The `Toolbar` component is a flexible and interactive toolbar that allows you to manage actions and their associated content easily. Here are some of its key features:
-
-### Features
-
-- **Accessibility**: The toolbar is designed with a11y in mind.
-- **Keyboard Navigation**: You can navigate through the toolbar using your keyboard.
-
-### How to Use
-
-1. Import the `Toolbar`:
+## Usage
 
 ```typescript
-import { Toolbar } from '../Tooltip'
-```
-
-2. Wrap your actions and content within the `Toolbar.Root` component. Here's a simple example:
-
-```typescript
+import { Toolbar } from './components/Toolbar'
 <Toolbar.Root>
-  <Toolbar.Action>
-    <Toolbar.Trigger icon={<YourIcon />} tooltip="Action 1">
-      <Toolbar.Content>Content for Action 1</Toolbar.Content>
-    </Toolbar.Trigger>
-  </Toolbar.Action>
-  <Toolbar.Action>
-    <Toolbar.Trigger icon={<YourIcon />} tooltip="Action 2">
-      <Toolbar.Content>Content for Action 2</Toolbar.Content>
-    </Toolbar.Trigger>
-  </Toolbar.Action>
+  <Toolbar.Item>
+    <Toolbar.Trigger icon={<Icon className="size-5" />} tooltip="Messages" />
+    <Toolbar.Content>
+      <div className="space-y-2">
+        <h3 className="font-medium">Inbox</h3>
+        <p>You have 3 new messages</p>
+      </div>
+    </Toolbar.Content>
+  </Toolbar.Item>
 </Toolbar.Root>
 ```
-
-## How to run
-
-- bun install
-- bun run dev
