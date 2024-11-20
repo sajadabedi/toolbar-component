@@ -3,7 +3,8 @@ const CollaboratorItem = ({ avatar, name, lastEdited }: any) => (
     <img
       src={avatar}
       alt={`${name}'s avatar`}
-      className="size-6 rounded-full"
+      className="size-6 rounded-full select-none"
+      draggable={false}
     />
     <div className="flex flex-col">
       <span className="text-sm">{name}</span>

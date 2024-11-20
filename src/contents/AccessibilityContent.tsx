@@ -15,7 +15,7 @@ export default function AccessibilityContent() {
           3.0
         </li>
       </ul>
-      <div className="shadow-subtle mt-1 rounded-md text-[13px] w-full bg-white dark:bg-neutral-800 py-2">
+      <div className="border border-gray-200 dark:border-neutral-700 mt-1 rounded-md text-[13px] w-full bg-white dark:bg-neutral-800 py-2">
         <ul className="flex flex-col gap-1">
           <li className="flex flex-col border-b border-gray-100 dark:border-neutral-700 pb-2 px-3 last:border-0 last:pb-0">
             <h4 className="text-sm">

@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { ToolbarContextValue } from './types'
 
-// Create context for Toolbar
 export const ToolbarContext = React.createContext<
   ToolbarContextValue | undefined
 >(undefined)

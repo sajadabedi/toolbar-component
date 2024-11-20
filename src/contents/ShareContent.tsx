@@ -4,7 +4,7 @@ const ShareContent = () => {
   return (
     <div className="flex flex-col items-center gap-1 text-center w-full">
       <div className="bg-white dark:bg-neutral-800 rounded-full border border-gray-200 dark:border-neutral-700 p-2">
-        <ShieldCheck className="size-5 text-gray-500 dark:text-neutral-400" />
+        <ShieldCheck className="size-5 text-green-600 dark:text-green-400" />
       </div>
       <h2 className="text-base font-medium text-gray-700 dark:text-neutral-200 tracking-tight">
         Share Preview

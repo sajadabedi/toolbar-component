@@ -1,19 +1,19 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import * as React from 'react'
-import { TriggerProps } from './Toolbar/types'
-import {
-  handleKeyboardNavigation,
-  ToolbarContext,
-  useToolbarContext,
-} from './Toolbar/utils'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from './Tooltip'
+} from '../Tooltip'
+import { TriggerProps } from './types'
+import {
+  handleKeyboardNavigation,
+  ToolbarContext,
+  useToolbarContext,
+} from './utils'
 
-// Root component for the Toolbar
+// Root
 function Root({ children }: { children: React.ReactNode }) {
   const [activeItemId, setActiveItemId] = React.useState<string | null>(null)
   const [focusedItemId, setFocusedItemId] = React.useState<string | null>(null)
@@ -33,8 +33,8 @@ function Root({ children }: { children: React.ReactNode }) {
     []
   )
 
-  // Handle item changes
-  const handleItemChange = React.useCallback(
+  // Update active item and direction
+  const updateActiveItem = React.useCallback(
     (newId: string | null) => {
       if (!newId) {
         setActiveItemId(null)
@@ -66,7 +66,7 @@ function Root({ children }: { children: React.ReactNode }) {
     <ToolbarContext.Provider
       value={{
         activeItemId,
-        setActiveItemId: handleItemChange,
+        setActiveItemId: updateActiveItem,
         registerContent,
         motionDirection: direction,
         focusedItemId,
@@ -156,6 +156,7 @@ function Root({ children }: { children: React.ReactNode }) {
   )
 }
 
+// Item
 function Item({ children }: { children: React.ReactNode }) {
   const itemId = React.useId()
   const { registerContent } = useToolbarContext()
@@ -185,6 +186,7 @@ function Item({ children }: { children: React.ReactNode }) {
   )
 }
 
+// Trigger
 function Trigger({ icon, tooltip, itemId }: TriggerProps) {
   const { activeItemId, setActiveItemId, focusedItemId, setFocusedItemId } =
     useToolbarContext()
@@ -228,12 +230,11 @@ function Trigger({ icon, tooltip, itemId }: TriggerProps) {
   )
 }
 
-// Content component for toolbar items
+// Content
 function Content(_: { children: React.ReactNode; itemId?: string }) {
   return null
 }
 
-// Exporting Toolbar components
 export const Toolbar = {
   Root,
   Item,
