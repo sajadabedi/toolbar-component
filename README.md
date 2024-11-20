@@ -6,7 +6,7 @@ Built using `React`, `Framer Motion`, `Tailwind CSS`.
 
 ```typescript
 import { Toolbar } from './components/Toolbar'
-<Toolbar.Root>
+;<Toolbar.Root>
   <Toolbar.Item>
     <Toolbar.Trigger icon={<Icon className="size-5" />} tooltip="Messages" />
     <Toolbar.Content>
@@ -18,3 +18,9 @@ import { Toolbar } from './components/Toolbar'
   </Toolbar.Item>
 </Toolbar.Root>
 ```
+
+## Things I want to improve
+
+- Optimizing for the mobile and touch screens.
+- Moving from Tailwind arbitrary styling into variables or tokens.
+- Supporting more extended content.
