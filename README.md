@@ -1,12 +1,16 @@
-# Toolbar Component
+# Toolbar Component prototype
+Exploring a multipurpose floating toolbar interface where users can perform quick actions and view relevant information at their fingertips. 
+
+[Watch preview](https://res.cloudinary.com/sajjadportfolio/video/upload/v1745924422/playground/fqq6dp7sslyakxfwt0v0.mov)
 
 Built using `React`, `Framer Motion`, `Tailwind CSS`.
 
 ## Usage
 
 ```typescript
-import { Toolbar } from './components/Toolbar'
-;<Toolbar.Root>
+import { Toolbar } from './components/Toolbar';
+
+<Toolbar.Root>
   <Toolbar.Item>
     <Toolbar.Trigger icon={<Icon className="size-5" />} tooltip="Messages" />
     <Toolbar.Content>
@@ -19,8 +23,4 @@ import { Toolbar } from './components/Toolbar'
 </Toolbar.Root>
 ```
 
-## Things I want to improve
 
-- Optimizing for the mobile and touch screens.
-- Moving from Tailwind arbitrary styling into variables or tokens.
-- Supporting more extended content.
